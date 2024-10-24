@@ -34,7 +34,7 @@ jobs:
             - name: List the files in src/foundation
               run: | 
                 Write-Host "Listing the files"
-                dir  "$env:GITHUB_WORKSPACE/foundation"
+                #dir  "$env:GITHUB_WORKSPACE/foundation"
                 dir "$env:DOTNET_ROOT"
               
             - name: list the files in C:\Program Files\dotnet
