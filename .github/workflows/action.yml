@@ -27,7 +27,7 @@ jobs:
             - name: build step 
               run: |
                 cd src
-                dotnet build  --configuration Debug --output src/dotnetfoundation-website.csproj/custom-output
+                dotnet build  --configuration Debug --output ./src/custom-output
                 write-host "list all the directories"
                 dir 
 
@@ -48,7 +48,7 @@ jobs:
                 
 
             - name: publish step 
-              run: dotnet publish src\dotnetfoundation-website.csproj -c Debug -o custom-output
+              run: dotnet publish src\dotnetfoundation-website.csproj -c Debug -o ./scr/custom-output
             - name: List the files in src/custom-output
               run: | 
                 Write-Host "Listing the files in dotroot"
@@ -62,7 +62,7 @@ jobs:
               uses: actions/upload-artifact@v4
               with:
                 name: custom-output
-                path: "src/dotnetfoundation-website.csproj/custom-output"
+                path: "./src/custom-output"
                 if-no-files-found: error 
 
 
