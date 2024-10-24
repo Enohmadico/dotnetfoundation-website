@@ -62,7 +62,7 @@ jobs:
               uses: actions/upload-artifact@v4
               with:
                 name: foundation
-                path: "${{env.DOTNET_ROOT}}/foundation"
+                path: "${{env.DOTNET_ROOT}}\foundation"
                 if-no-files-found: error 
 
 
