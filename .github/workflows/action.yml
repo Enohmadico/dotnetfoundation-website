@@ -48,7 +48,7 @@ jobs:
                 
 
             - name: publish step 
-              run: dotnet publish src\dotnetfoundation-website.csproj -c Debug   -o "{{env.DOTNET_ROOT}}/foundation"
+              run: dotnet publish src\dotnetfoundation-website.csproj -c Debug   -o "{{env.DOTNET_ROOT}}\foundation"
             - name: List the files in src/foundation
               run: | 
                 Write-Host "Listing the files in dotroot"
