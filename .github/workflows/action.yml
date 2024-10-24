@@ -38,7 +38,7 @@ jobs:
                 dir
             - name: list the files in C:\Program Files\dotnet
               run: |
-                Get-ChildItem -path C:\Program Files\dotnet 
+                Get-ChildItem -path "C:\Program Files\dotnet "
             - name: upload artifacts
               uses: actions/upload-artifact@v4
               with:
