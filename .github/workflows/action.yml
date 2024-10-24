@@ -27,7 +27,7 @@ jobs:
             - name: build step 
               run: |
                 cd src
-                dotnet build  --configuration Debug --output ${{env:DONET_ROOT}}/src/custom-output
+                dotnet build  --configuration Debug --output ${{env.DONET_ROOT}}/src/custom-output
                 write-host "list all the directories"
                 dir 
 
