@@ -5,6 +5,8 @@ on:
         branches:
             - main 
     workflow_dispatch: 
+env: 
+  DOTNET_ROOT: "."
 jobs:
     build:
         runs-on: windows-latest
@@ -33,7 +35,7 @@ jobs:
               run: dotnet publish src\dotnetfoundation-website.csproj -c Debug   -o "{{env.DOTNET_ROOT}}/foundation"
             - name: List the files in src/foundation
               run: | 
-                Write-Host "Listing the files"
+                Write-Host "Listing the files in dotroot"
                 #dir  "$env:GITHUB_WORKSPACE/foundation"
                 dir "$env:DOTNET_ROOT"
               
