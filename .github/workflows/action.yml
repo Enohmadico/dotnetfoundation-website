@@ -29,8 +29,13 @@ jobs:
                 write-host "list all the directories"
                 dir 
 
-            # - name: publish step 
-            #   run: dotnet publish -c Debug  src\dotnetfoundation-website.csproj  -o /foundation
+            - name: publish step 
+              run: dotnet publish src\dotnetfoundation-website.csproj -c Debug   -o src/foundation
+            - name: List the files in src/foundation
+              run: | 
+                Write-Host "Listing the files"
+                cd src/foundation
+                dir
                 
          
               
