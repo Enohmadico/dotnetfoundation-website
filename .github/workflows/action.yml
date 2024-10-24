@@ -27,7 +27,7 @@ jobs:
             - name: build step 
               run: |
                 cd src
-                dotnet build  --configuration Debug --no-restore
+                dotnet build  --configuration Debug --output src/custom-ouput
                 write-host "list all the directories"
                 dir 
 
@@ -48,8 +48,8 @@ jobs:
                 
 
             - name: publish step 
-              run: dotnet publish src\dotnetfoundation-website.csproj -c Debug   -o "{{env.DOTNET_ROOT}}/foundation"
-            - name: List the files in src/foundation
+              run: dotnet publish src\dotnetfoundation-website.csproj -c Debug -o custom-output
+            - name: List the files in src/custom-output
               run: | 
                 Write-Host "Listing the files in dotroot"
                 #dir  "$env:GITHUB_WORKSPACE/foundation"
@@ -61,8 +61,8 @@ jobs:
             - name: upload artifacts
               uses: actions/upload-artifact@v4
               with:
-                name: foundation
-                path: "${{env.DOTNET_ROOT}}\foundation**"
+                name: custom-output
+                path: "src/dotnetfoundation-website.csproj/custom-output"
                 if-no-files-found: error 
 
 
