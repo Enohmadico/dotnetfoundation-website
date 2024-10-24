@@ -27,7 +27,7 @@ jobs:
             - name: build step 
               run: |
                 cd src
-                dotnet build  --configuration Debug --output src/custom-ouput
+                dotnet build  --configuration Debug --output src/dotnetfoundation-website.csproj/custom-output
                 write-host "list all the directories"
                 dir 
 
