@@ -43,7 +43,7 @@ jobs:
               uses: actions/upload-artifact@v4
               with:
                 name: foundation
-                path: ${{ github.workspace }}/scr/foundation
+                path: ./scr/foundation
                 if-no-files-found: error 
 
 
