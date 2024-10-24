@@ -33,10 +33,17 @@ jobs:
 
             - name: create  foundation folder 
               run: |
-                $path = "env:DOTNET_ROOT\\foundation"
-                if (-Not (test-path -path $path)){
-                new-item -itemtype Directory -path $path 
-                write-host "created directory: $path"} esle {
+                write-host "DONET_ROOT  is :$env:DOTNET_ROOT "
+                $path = "$env:DOTNET_ROOT\\foundation"
+                if (-Not $env:DOTNET_ROOT ){
+                write-host "DONET_ROOT is not set."
+                exist 1 
+                }
+                
+                if(-Not (Test-path -path $path)) {
+                write-host "creating directory:$path"
+                new-item -itemtype directory -path $path}
+                else {
                 write-host "directory already exist :$path"}
                 
 
