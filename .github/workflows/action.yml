@@ -15,6 +15,9 @@ jobs:
               uses: actions/setup-dotnet@v3
               with:
                 dotnet-version: '3.0.x'
+            - name: list directory
+              run: |
+                dir 
             - name: install dependencies 
               run: dotnet restore
             - name: build step 
