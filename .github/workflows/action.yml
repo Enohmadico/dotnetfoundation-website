@@ -7,6 +7,7 @@ on:
     workflow_dispatch: 
 env: 
   DOTNET_ROOT: "."
+  WEBAPP_NAME: webap-edwin
 jobs:
     build:
         runs-on: windows-latest
@@ -29,40 +30,44 @@ jobs:
                 cd src
                 dotnet build  --configuration Debug --output ${{env.DONET_ROOT}}/src/custom-output
                 write-host "list all the directories"
-                dir 
-
-            # - name: create  foundation folder 
-            #   run: |
-            #     write-host "DONET_ROOT  is :$env:DOTNET_ROOT "
-            #     $path = "$env:DOTNET_ROOT\\foundation"
-            #     if (-Not $env:DOTNET_ROOT ){
-            #     write-host "DONET_ROOT is not set."
-            #     exist 1 
-            #     }
-                
-            #     if(-Not (Test-path -path $path)) {
-            #     write-host "creating directory:$path"
-            #     new-item -itemtype directory -path $path}
-            #     else {
-            #     write-host "directory already exist :$path"}
-                
-
+                dir
             - name: publish step 
               run: dotnet publish src/dotnetfoundation-website.csproj -c Debug -o ./src/custom-output
             - name: List the files in src/custom-output
               run: | 
                 Write-Host "Listing the files in ./src/custom-output"
                 dir  ./src/custom-output
-            # - name: list the files in C:\Program Files\dotnet
-            #   run: |
-            #     Get-ChildItem -path "${{ github.workspace }}"
             - name: upload artifacts
               uses: actions/upload-artifact@v4
               with:
                 name: custom-output
                 path: ./src/custom-output
                 if-no-files-found: error 
+    
+    deploy:
+      needs: build
+      runs-on: windows-latest
+      environment: 
+        name: DEVELOPMENT
+        url: ${{steps.link.outputs.webapp-url}}
+      
+      steps:
+        - name: Download Artifact
+          uses: actions/Download-artifact@v4
+          with:
+            name: custom-output
+            path: it the path that the downloaded artifact will be kept 
+        - name: Webdeploy step
+          id: link
+          uses: azure/webapps-deploy@v2
+          with:
+            app-name: ${{env.WEBAPP_NAME}}
+            publish-profile: ${{ secrets.azureWebAppPublishProfile }}
+            
+    
 
+    
+  
 
              
                 
