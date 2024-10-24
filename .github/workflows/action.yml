@@ -24,6 +24,7 @@ jobs:
                dotnet restore
             - name: build step 
               run: |
+                cd src
                 dotnet build  --configuration Debug --no-restore
                 write-host "list all the directories"
                 dir 
