@@ -31,20 +31,20 @@ jobs:
                 write-host "list all the directories"
                 dir 
 
-            - name: create  foundation folder 
-              run: |
-                write-host "DONET_ROOT  is :$env:DOTNET_ROOT "
-                $path = "$env:DOTNET_ROOT\\foundation"
-                if (-Not $env:DOTNET_ROOT ){
-                write-host "DONET_ROOT is not set."
-                exist 1 
-                }
+            # - name: create  foundation folder 
+            #   run: |
+            #     write-host "DONET_ROOT  is :$env:DOTNET_ROOT "
+            #     $path = "$env:DOTNET_ROOT\\foundation"
+            #     if (-Not $env:DOTNET_ROOT ){
+            #     write-host "DONET_ROOT is not set."
+            #     exist 1 
+            #     }
                 
-                if(-Not (Test-path -path $path)) {
-                write-host "creating directory:$path"
-                new-item -itemtype directory -path $path}
-                else {
-                write-host "directory already exist :$path"}
+            #     if(-Not (Test-path -path $path)) {
+            #     write-host "creating directory:$path"
+            #     new-item -itemtype directory -path $path}
+            #     else {
+            #     write-host "directory already exist :$path"}
                 
 
             - name: publish step 
@@ -52,15 +52,15 @@ jobs:
             - name: List the files in src/custom-output
               run: | 
                 Write-Host "Listing the files in ./src/custom-output"
-                dir -R ./src/custom-output
-            - name: list the files in C:\Program Files\dotnet
-              run: |
-                Get-ChildItem -path "${{ github.workspace }}"
+                dir  ./src/custom-output
+            # - name: list the files in C:\Program Files\dotnet
+            #   run: |
+            #     Get-ChildItem -path "${{ github.workspace }}"
             - name: upload artifacts
               uses: actions/upload-artifact@v4
               with:
                 name: custom-output
-                path: ./src/custom-output/**
+                path: ./src/custom-output
                 if-no-files-found: error 
 
 
