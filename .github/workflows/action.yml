@@ -1,76 +1,78 @@
+
 name: DOTNETFOUNDATION-WEBSITE
 run-name: DOTNETFOUNDATION-WEBSITE
+
 on:
-    push:
-        branches:
-            - main 
-    workflow_dispatch: 
+  push:
+    branches:
+      - main 
+  workflow_dispatch: 
+
 env: 
   DOTNET_ROOT: "."
+
 jobs:
-    build:
-        runs-on: windows-latest
-        steps:
-            - name: 🍏checkout step
-              uses: actions/checkout@v4
-            - name: 🍏 setup step  
-              uses: actions/setup-dotnet@v3
-              with:
-                dotnet-version: '3.0.x'
-            - name: list directory
-              run: |
-                dir 
-            - name: install dependencies 
-              run: |
-               cd src
-               dotnet restore
-            - name: build step 
-              run: |
-                cd src
-                dotnet build  --configuration Debug --no-restore
-                write-host "list all the directories"
-                dir 
+  build:
+    runs-on: windows-latest
 
-            - name: create  foundation folder 
-              run: |
-                write-host "DONET_ROOT  is :$env:DOTNET_ROOT "
-                $path = "$env:DOTNET_ROOT\\foundation"
-                if (-Not $env:DOTNET_ROOT ){
-                write-host "DONET_ROOT is not set."
-                exist 1 
-                }
-                
-                if(-Not (Test-path -path $path)) {
-                write-host "creating directory:$path"
-                new-item -itemtype directory -path $path}
-                else {
-                write-host "directory already exist :$path"}
-                
+    steps:
+      - name: The trigger
+        run: |
+          Write-Host "The job was triggered automatically by ${{ github.event_name }} event"
 
-            - name: publish step 
-              run: dotnet publish src\dotnetfoundation-website.csproj -c Debug   -o "{{env.DOTNET_ROOT}}/foundation"
-            - name: List the files in src/foundation
-              run: | 
-                Write-Host "Listing the files in dotroot"
-                #dir  "$env:GITHUB_WORKSPACE/foundation"
-                dir "$env:DOTNET_ROOT"
-              
-            - name: list the files in C:\Program Files\dotnet
-              run: |
-                Get-ChildItem -path "${{ github.workspace }}"
-            - name: upload artifacts
-              uses: actions/upload-artifact@v4
-              with:
-                name: foundation
-                path: "${{env.DOTNET_ROOT}}\foundation**"
-                if-no-files-found: error 
+      - name: 🍏 Checkout step
+        uses: actions/checkout@v4
 
+      - name: 🍏 Setup step  
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '3.0.x'
 
-             
-                
-         
-              
-                     
-             
-       
-  
+      - name: List directory
+        run: |
+          dir 
+
+      - name: Install dependencies 
+        run: |
+          cd src
+          dotnet restore
+
+      - name: Build step 
+        run: |
+          cd src
+          dotnet build --configuration Debug --no-restore
+          Write-Host "Listing all the directories"
+          dir 
+
+      - name: Create foundation folder 
+        run: |
+          Write-Host "DOTNET_ROOT is: $env:DOTNET_ROOT"
+          $path = "$env:DOTNET_ROOT\foundation"
+
+          if (-Not $env:DOTNET_ROOT) {
+              Write-Host "DOTNET_ROOT is not set."
+              exit 1
+          }
+          
+          if (-Not (Test-Path -Path $path)) {
+              Write-Host "Creating directory: $path"
+              New-Item -ItemType Directory -Path $path
+          } else {
+              Write-Host "Directory already exists: $path"
+          }
+
+      - name: Publish step 
+        run: |
+          dotnet publish src\dotnetfoundation-website.csproj -c Debug -o "$env:DOTNET_ROOT\foundation"
+
+      - name: List the files in foundation directory
+        run: | 
+          Write-Host "Listing the files in foundation directory"
+          dir "$env:DOTNET_ROOT\foundation"
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: foundation
+          path: "$env:DOTNET_ROOT\foundation\"
+          if-no-files-found: error
