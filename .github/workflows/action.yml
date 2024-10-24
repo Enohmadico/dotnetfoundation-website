@@ -48,7 +48,7 @@ jobs:
                 
 
             - name: publish step 
-              run: dotnet publish src\dotnetfoundation-website.csproj -c Debug   -o "{{env.DOTNET_ROOT}}\foundation"
+              run: dotnet publish src\dotnetfoundation-website.csproj -c Debug   -o "{{env.DOTNET_ROOT}}/foundation"
             - name: List the files in src/foundation
               run: | 
                 Write-Host "Listing the files in dotroot"
@@ -62,7 +62,7 @@ jobs:
               uses: actions/upload-artifact@v4
               with:
                 name: foundation
-                path: "${{env.DOTNET_ROOT}}\foundation"
+                path: "${{env.DOTNET_ROOT}}\foundation**"
                 if-no-files-found: error 
 
 
