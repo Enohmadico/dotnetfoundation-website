@@ -48,11 +48,11 @@ jobs:
                 
 
             - name: publish step 
-              run: dotnet publish src/dotnetfoundation-website.csproj -c Debug -o ./scr/custom-output
+              run: dotnet publish src/dotnetfoundation-website.csproj -c Debug -o ./src/custom-output
             - name: List the files in src/custom-output
               run: | 
-                Write-Host "Listing the files in ./scr/custom-output"
-                dir -R ./scr/custom-output
+                Write-Host "Listing the files in ./src/custom-output"
+                dir -R ./src/custom-output
             - name: list the files in C:\Program Files\dotnet
               run: |
                 Get-ChildItem -path "${{ github.workspace }}"
