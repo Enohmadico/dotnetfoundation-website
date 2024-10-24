@@ -1,0 +1,34 @@
+name: DOTNETFOUNDATION-WEBSITE
+run-name: DOTNETFOUNDATION-WEBSITE
+on:
+    push:
+        branches:
+            - main 
+    workflow_dispatch: 
+jobs:
+    build:
+        runs-on: windows-latest
+        steps:
+            - name: 🍏checkout step
+              uses: actions/checkout@v4
+            - name: 🍏 setup step  
+              uses: actions/setup-dotnet@v3
+              with:
+                dotnet-version: '3.0.0'
+            - name: install dependencies 
+              run: dotnet restore
+            - name: build step 
+              run: |
+                dotnet build  --configuration Debug --no-restore
+                write-host "list all the directories"
+                dir 
+
+            # - name: publish step 
+            #   run: dotnet publish -c Debug  src\dotnetfoundation-website.csproj  -o /foundation
+                
+         
+              
+                     
+             
+       
+  
