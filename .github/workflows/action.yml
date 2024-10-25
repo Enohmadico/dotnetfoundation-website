@@ -64,6 +64,8 @@ jobs:
           with:
             app-name: ${{env.WEBAPP_NAME}}
             publish-profile: ${{ secrets.azureWebAppPublishProfile }}
+            package: .
+
         - name: display done  deploying in to azure 
           run : |
             write-host " deploy in to azure"
